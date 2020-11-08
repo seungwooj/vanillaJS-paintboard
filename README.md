@@ -1,3 +1,2 @@
-
-paintBoard
+paintBoard made with vanillaJS
 
