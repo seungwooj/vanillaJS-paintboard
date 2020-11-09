@@ -19,7 +19,7 @@ ctx.fillStyle = "white";
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = INITIAL_COLOR;
 ctx.fillStyle = INITIAL_COLOR;
-ctx.lineWidth = 5;
+ctx.lineWidth = 2.5;
 
 let painting = false;
 let filling = false;
@@ -82,7 +82,7 @@ function handleCM(event) {
 }
 
 function handleSaveClick() {
-    const image = canvas.toDataURL("image/jpeg");
+    const image = canvas.toDataURL("image/png");
     const link = document.createElement("a");
     /*
     download : an attribute of "a" tag
