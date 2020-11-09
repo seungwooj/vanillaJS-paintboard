@@ -4,6 +4,7 @@ you can control the canvas using the attributes of 'context'
 */
 const canvas = document.getElementById("js-Canvas");
 const ctx = canvas.getContext("2d");
+const colors = document.getElementsByClassName("js-Color");
 
 canvas.width = 600;
 canvas.height = 600;
@@ -16,9 +17,11 @@ function onMouseMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
     if(!painting) {
+        //everytime I move the pointer while not painting, the coords change
         ctx.beginPath();
         ctx.moveTo(x,y);
     } else {
+        //everytime I move the pointer while painting, I create line and I stroke the line
         ctx.lineTo(x,y);
         ctx.stroke();
     }
@@ -36,10 +39,20 @@ function stopPainting() {
     painting = false;
 }
 
+function handleColorClick(event) {
+    const color = event.target.style.backgroundColor;
+    console.log(color);
+    ctx.strokeStyle = color;
+}
 
 if(canvas){
     canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mousedown", onMouseDown);
+    canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
 }
+
+// Create array of colors & add eventlistener inside the array
+Array.from(colors).forEach(color => 
+    color.addEventListener("click", handleColorClick)
+    );
