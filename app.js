@@ -24,7 +24,7 @@ ctx.lineWidth = 2.5;
 let painting = false;
 let filling = false;
 
-function onMouseMove(event) {
+function onMove(event) {
     const x = event.offsetX;
     const y = event.offsetY;
     if(!painting) {
@@ -36,10 +36,6 @@ function onMouseMove(event) {
         ctx.lineTo(x,y);
         ctx.stroke();
     }
-}
-
-function onMouseDown(event) {
-    painting = true;
 }
 
 function startPainting() {
@@ -95,10 +91,14 @@ function handleSaveClick() {
 
 // Draw line on the canvas
 if(canvas){
-    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mousemove", onMove);
+    canvas.addEventListener("touchmove", onMove);
     canvas.addEventListener("mousedown", startPainting);
+    canvas.addEventListener("touchstart", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
+    canvas.addEventListener("touchend", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
+    canvas.addEventListener("touchcancel", stopPainting);
     canvas.addEventListener("click", handleCanvasClick);
     // prevent rightclick on the image to save image
     canvas.addEventListener("contextmenu", handleCM);
