@@ -7,6 +7,7 @@ const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("js-Color");
 const range = document.getElementById("js-Range");
 const mode = document.getElementById("js-Mode");
+const save = document.getElementById("js-Save");
 
 const INITIAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 600;
@@ -14,6 +15,8 @@ const CANVAS_SIZE = 600;
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
 
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.strokeStyle = INITIAL_COLOR;
 ctx.fillStyle = INITIAL_COLOR;
 ctx.lineWidth = 5;
@@ -74,13 +77,31 @@ function handleCanvasClick() {
     }
 }
 
+function handleCM(event) {
+    event.preventDefault();
+}
+
+function handleSaveClick() {
+    const image = canvas.toDataURL("image/jpeg");
+    const link = document.createElement("a");
+    /*
+    download : an attribute of "a" tag
+    How to download image using canvasAPI ? -> "a html mdn download" search!
+    */
+    link.href = image;
+    link.download = "yourPainting"
+    link.click();
+}
+
 // Draw line on the canvas
 if(canvas){
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", stopPainting);
     canvas.addEventListener("mouseleave", stopPainting);
-    canvas.addEventListener("click", handleCanvasClick)
+    canvas.addEventListener("click", handleCanvasClick);
+    // prevent rightclick on the image to save image
+    canvas.addEventListener("contextmenu", handleCM);
 }
 
 // Create array of colors & add eventlistener inside the array
@@ -96,4 +117,8 @@ if(range) {
 //Change between modes (filling & painting)
 if(mode) {
     mode.addEventListener("click", handleModeClick);
+}
+
+if(save) {
+    save.addEventListener("click", handleSaveClick);
 }
