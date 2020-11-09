@@ -5,11 +5,12 @@ you can control the canvas using the attributes of 'context'
 const canvas = document.getElementById("js-Canvas");
 const ctx = canvas.getContext("2d");
 const colors = document.getElementsByClassName("js-Color");
+const range = document.getElementById("js-Range");
 
 canvas.width = 600;
 canvas.height = 600;
 ctx.strokeStyle = "#2c2c2c";
-ctx.lineWidth = 2.5;
+ctx.lineWidth = 5;
 
 let painting = false;
 
@@ -41,10 +42,15 @@ function stopPainting() {
 
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;
-    console.log(color);
     ctx.strokeStyle = color;
 }
 
+function handleRangeChange(event) {
+    const size = event.target.value;
+    ctx.lineWidth = size;
+}
+
+// Draw line on the canvas
 if(canvas){
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
@@ -55,4 +61,9 @@ if(canvas){
 // Create array of colors & add eventlistener inside the array
 Array.from(colors).forEach(color => 
     color.addEventListener("click", handleColorClick)
-    );
+);
+
+//Change the brush size
+if(range) {
+    range.addEventListener("input", handleRangeChange)
+}
